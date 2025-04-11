@@ -1,60 +1,118 @@
 #include <stdio.h>
 
-int main() {
-    // ============================
-    // MOVIMENTO DA TORRE (for)
-    // ============================
-    printf("Movimento da Torre:\n");
-    for (int i = 1; i <= 5; i++) {
-        printf("Direita\n");
+// ==========================
+// Função recursiva da Torre
+// ==========================
+void moverTorre(int casas) {
+    if (casas == 0) return;
+    printf("Direita\n");
+    moverTorre(casas - 1);
+}
+
+// ==========================
+// Função recursiva da Rainha
+// ==========================
+void moverRainha(int casas) {
+    if (casas == 0) return;
+    printf("Esquerda\n");
+    moverRainha(casas - 1);
+}
+
+// ==========================
+// Função recursiva do Bispo
+// ==========================
+void moverBispo(int casas) {
+    if (casas == 0) return;
+    printf("Cima Direita\n");
+    moverBispo(casas - 1);
+}
+
+// ==========================
+// Movimento com loops aninhados do Bispo
+// ==========================
+void moverBispoComLoops(int casas) {
+    printf("Movimento alternativo do Bispo (usando loops aninhados):\n");
+
+    for (int vertical = 1; vertical <= casas; vertical++) {
+        for (int horizontal = 1; horizontal <= 1; horizontal++) {
+            printf("Cima Direita\n");
+        }
     }
 
     printf("\n");
+}
 
-    // ============================
-    // MOVIMENTO DO BISPO (while)
-    // ============================
-    int casas_bispo = 1;
-    printf("Movimento do Bispo:\n");
-    while (casas_bispo <= 5) {
-        printf("Cima Direita\n");
-        casas_bispo++;
-    }
+// ==========================
+// Movimento complexo do Cavalo com loops aninhados
+// ==========================
+void moverCavalo() {
+    printf("Movimento do Cavalo (Cima Cima Direita):\n");
 
-    printf("\n");
+    int passos_cima = 2;
+    int passos_direita = 1;
 
-    // ============================
-    // MOVIMENTO DA RAINHA (do-while)
-    // ============================
-    int casas_rainha = 1;
-    printf("Movimento da Rainha:\n");
-    do {
-        printf("Esquerda\n");
-        casas_rainha++;
-    } while (casas_rainha <= 8);
-
-    printf("\n");
-
-    // ============================
-    // MOVIMENTO DO CAVALO (for + while)
-    // ============================
-    // O Cavalo fará 2 movimentos para Baixo e 1 para Esquerda, formando um "L"
-    printf("Movimento do Cavalo:\n");
-
-    // Loop externo: movimento de 2 casas para baixo (obrigatoriamente for)
-    for (int i = 1; i <= 2; i++) {
-        printf("Baixo\n");
-
-        // Loop interno: só executa na segunda vez (quando i == 2)
-        // Responsável por uma casa para a esquerda
+    // Loop externo para cima
+    for (int i = 1; i <= passos_cima; i++) {
         if (i == 2) {
+            // Após subir duas vezes, movimenta para a direita
             int j = 0;
-            while (j < 1) {
-                printf("Esquerda\n");
+            while (j < passos_direita) {
+                printf("Direita\n");
                 j++;
             }
         }
+
+        // Se ainda não chegou no segundo passo para cima, continue
+        if (i < passos_cima) {
+            printf("Cima\n");
+            continue;
+        }
+
+        // Última subida
+        printf("Cima\n");
     }
+
+    printf("\n");
+}
+
+// ==========================
+// Função principal
+// ==========================
+int main() {
+    int casas_torre = 5;
+    int casas_bispo = 5;
+    int casas_rainha = 8;
+
+    // -------------------------
+    // Torre
+    // -------------------------
+    printf("Movimento da Torre:\n");
+    moverTorre(casas_torre);
+    printf("\n");
+
+    // -------------------------
+    // Bispo (recursivo)
+    // -------------------------
+    printf("Movimento do Bispo:\n");
+    moverBispo(casas_bispo);
+    printf("\n");
+
+    // -------------------------
+    // Rainha
+    // -------------------------
+    printf("Movimento da Rainha:\n");
+    moverRainha(casas_rainha);
+    printf("\n");
+
+    // -------------------------
+    // Cavalo
+    // -------------------------
+    moverCavalo();
+
+    // -------------------------
+    // Bispo (versão com loops aninhados)
+    // -------------------------
+    moverBispoComLoops(5);
 
     return 0;
 }
